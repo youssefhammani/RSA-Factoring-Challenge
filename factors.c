@@ -3,6 +3,8 @@
 #include <unistd.h>
 #include <stdint.h>
 
+#define _GNU_SOURCE
+
 
 /**
  * factors - The function factorize a number
