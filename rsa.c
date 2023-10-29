@@ -37,18 +37,14 @@ int is_prime(uint64_t num)
  */
 void find_prime_factors(uint64_t num)
 {
-	uint64_t p, q;
+	uint64_t p;
 
-	for (p = 2; p <= sqrt(num); p++)
+	for (p = 2; p <= num / 2; ++p)
 	{
-		if (num % p == 0 && is_prime(p))
+		if (num % p == 0 && is_prime(p) && is_prime(num / p))
 		{
-			q = num / p;
-			if (is_prime(q))
-			{
-				printf("%lu=%lu*%lu\n", num, p, q);
-				return;
-			}
+			printf("%lu=%lu*%lu\n", num, p, num / p);
+			return;
 		}
 	}
 	printf("Couldn't find prime factors within limits for %lu\n", num);
