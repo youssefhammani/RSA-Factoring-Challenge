@@ -1,35 +1,28 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
 #include <stdint.h>
 
-#define _GNU_SOURCE
-
-
 /**
- * factors - The function factorize a number
- * @buffer: pointer to the address of the number
+ * factorize - Function to factorize the number into two smaller numbers
+ * @num: Variable stored the number from the file
  *
- * Return: int
+ * Return:;
  */
-int factors(char *buffer)
+void factorize(uint64_t num)
 {
-	uint32_t idx;
-	uint32_t nbr;
+	uint64_t p, q;
 
-	idx = 1;
-	nbr = atoi(buffer);
-
-	while (++idx < nbr)
+	for (p = 2; p * p <= num; p++)
 	{
-		if (nbr % idx == 0)
+		if (num % p == 0)
 		{
-			printf("%d=%d*%d\n", nbr, nbr / idx, idx);
-			break;
+			q = num / p;
+			printf("%llu=", (unsigned long long)num);
+			printf("%llu*%llu\n", (unsigned long long)p, (unsigned long long)q);
+			return;
 		}
 	}
-
-	return (0);
+	printf("1=1*%llu\n", (unsigned long long)num);
 }
 
 /**
@@ -42,32 +35,27 @@ int factors(char *buffer)
  */
 int main(int ac, char *av[])
 {
-	FILE *fd;
-	size_t count = 0;
-	ssize_t line;
-	char *buffer = NULL;
-
 	if (ac != 2)
 	{
-		fprintf(stderr, "Usage: factor <filename>\n");
+		fprintf(stderr, "Usage: factors <filename>\n");
 		exit(EXIT_FAILURE);
 	}
 
-	fd = fopen(av[1], "r");
+	FILE *file = fopen(av[1], "r");
 
-	if (fd == NULL)
+	if (file == NULL)
 	{
 		fprintf(stderr, "Error: can't open file %s\n", av[1]);
 		exit(EXIT_FAILURE);
 	}
 
-	while ((line = getline(&buffer, &count, fd)) != -1)
-	{
-		factors(buffer);
-	}
+	uint64_t num;
 
-	free(buffer);
-	fclose(fd);
+	while (fscanf(file, "%lu", &num) == 1)
+	{
+		factorize(num);
+	}
+	fclose(file);
 
 	return (0);
 }
