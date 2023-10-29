@@ -7,7 +7,7 @@
  * is_prime - Checks if a number is prime.
  *
  * @num: The number to check.
- * @Return: 1 is prime.
+ * Return: 1 if not prime 0 if prime.
  */
 int is_prime(uint64_t num)
 {
@@ -39,11 +39,11 @@ void find_prime_factors(uint64_t num)
 {
 	uint64_t p;
 
-	for (p = 2; p <= num / 2; ++p)
+	for (p = 2; p * p <= num; ++p)
 	{
 		if (num % p == 0 && is_prime(p) && is_prime(num / p))
 		{
-			printf("%lu=%lu*%lu\n", num, p, num / p);
+			printf("%lu=%lu*%lu\n", num, num / p, p);
 			return;
 		}
 	}
