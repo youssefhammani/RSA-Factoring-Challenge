@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include <stdint.h>
 
 
@@ -11,11 +12,11 @@
  */
 int factors(char *buffer)
 {
-	uint32_t nbr;
 	uint32_t idx;
+	uint32_t nbr;
 
-	nbr = atoi(buffer);
 	idx = 1;
+	nbr = atoi(buffer);
 
 	while (++idx < nbr)
 	{
@@ -68,4 +69,3 @@ int main(int ac, char *av[])
 
 	return (0);
 }
-
